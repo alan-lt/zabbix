@@ -1,4 +1,15 @@
-# Zabbix template handles Software RAID (MD) on Linux
+# Template PHP-FPM for Hosting server (ISPConfig v3)
+
+```
+# cp /usr/local/ispconfig/server/conf/php_fpm_pool.conf.master /usr/local/ispconfig/server/conf-custom/php_fpm_pool.conf.master
+# cat /usr/local/ispconfig/server/conf-custom/php_fpm_pool.conf.master
+
+...
+pm.status_path = /pfpm-status
+...
+```
+
+# Template for Software RAID (MD) on Linux
 
 ## Design and Implementaion:
 
