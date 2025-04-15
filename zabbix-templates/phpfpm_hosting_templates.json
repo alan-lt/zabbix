@@ -1,0 +1,423 @@
+{
+    "zabbix_export": {
+        "version": "7.2",
+        "template_groups": [
+            {
+                "uuid": "a571c0d144b14fd4a87a9d9b2aa9fcd6",
+                "name": "Templates/Applications"
+            }
+        ],
+        "templates": [
+            {
+                "uuid": "86ead0c260494480b5e63b7ec395ada8",
+                "template": "PHP-FPM by Zabbix agent for hosting",
+                "name": "PHP-FPM by Zabbix agent for hosting",
+                "description": "Get PHP-FPM metrics using Zabbix agent running on Linux.\n\nNote that depending on your OS distribution\n\nReworked for hosting server\n\nAlan V www.alan.lt\nhttps://github.com/alan-lt/zabbix",
+                "groups": [
+                    {
+                        "name": "Templates/Applications"
+                    }
+                ],
+                "items": [
+                    {
+                        "uuid": "e71545d8a12143e19d778525de015d08",
+                        "name": "PHP-FPM get data",
+                        "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]",
+                        "history": "0",
+                        "value_type": "TEXT",
+                        "tags": [
+                            {
+                                "tag": "application",
+                                "value": "php-fpm"
+                            },
+                            {
+                                "tag": "component",
+                                "value": "raw"
+                            }
+                        ]
+                    }
+                ],
+                "discovery_rules": [
+                    {
+                        "uuid": "88420134487d40f492ac2900efe9182b",
+                        "name": "PHP-FPM process discovery",
+                        "type": "DEPENDENT",
+                        "key": "php-fpm.discovery",
+                        "description": "The discovery of the PHP-FPM summary processes.",
+                        "item_prototypes": [
+                            {
+                                "uuid": "35ffad189bf74deab25883410d87bdf5",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} accepted conn",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.accepted_conn[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The number of accepted requests per second.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"accepted conn\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "7865ab924e144e589548904d26dd6dc6",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} active processes",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.active_processes[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The total number of active processes.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"active processes\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "c17cf9cf84b74dfd8a33827b08ccfed4",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} processes (idle)",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.idle_processes[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The total number of idle processes.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"idle processes\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "dfa18c8c724e4416abd3b3c34930b7eb",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} listen queue",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.listen_queue[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The current number of connections that have been initiated but not yet accepted.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"listen queue\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "0fe13fc136dd4707909e2edfd1d2144a",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} listen queue (len)",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.listen_queue_len[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The size of the socket queue of pending connections.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"listen queue len\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "95c16081cc8d47b883e8cb3cba64524c",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} active processes (max)",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.max_active_processes[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The highest value of \"active processes\" since the PHP-FPM server was started.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"max active processes\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "3bc71ed80acc4f66a6eb601d31eb6056",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} max children reached",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.max_children_reached[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The number of times that `pm.max_children` has been reached since the PHP-FPM pool was started.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"max children reached\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "4bb259cc3d4d4efb8ccc09f01e25a300",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} listen queue (max)",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.max_listen_queue[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The maximum number of requests in the queue of pending connections since this FPM pool was started.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"max listen queue\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "fd6c22062aff4b8c8bbad1fee617588c",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} slow requests",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.slow_requests[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The number of requests that has exceeded your `request_slowlog_timeout` value.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"slow requests\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "300c9c8827d94eccacfcf57ac5275be2",
+                                "name": "PHP-FPM {#PHP_FPM.NAME} processes (total)",
+                                "type": "DEPENDENT",
+                                "key": "php-fpm.total_processes[{#PHP_FPM.NAME}]",
+                                "history": "14d",
+                                "description": "The total number of server processes currently running.",
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.[?(@[\"domain\"]==\"{#PHP_FPM.NAME}\")].first()"
+                                        ]
+                                    },
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.data.[\"total processes\"]"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                                },
+                                "tags": [
+                                    {
+                                        "tag": "application",
+                                        "value": "php-fpm"
+                                    },
+                                    {
+                                        "tag": "domain",
+                                        "value": "{#PHP_FPM.NAME}"
+                                    }
+                                ]
+                            }
+                        ],
+                        "master_item": {
+                            "key": "vfs.file.contents[/tmp/php-fpm-status-collector.json]"
+                        },
+                        "lld_macro_paths": [
+                            {
+                                "lld_macro": "{#PHP_FPM.NAME}",
+                                "path": "$.domain"
+                            }
+                        ]
+                    }
+                ],
+                "tags": [
+                    {
+                        "tag": "class",
+                        "value": "application"
+                    },
+                    {
+                        "tag": "target",
+                        "value": "php-fpm"
+                    }
+                ]
+            }
+        ]
+    }
+}

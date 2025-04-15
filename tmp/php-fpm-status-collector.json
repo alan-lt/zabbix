@@ -1,0 +1,11 @@
+[
+    {
+    "domain":"domain.com",
+    "data":{"pool":"web1","process manager":"ondemand","start time":1744659723,"start since":42739,"accepted conn":1333,"listen queue":0,"max listen queue":0,"listen queue len":0,"idle processes":0,"active processes":1,"total processes":1,"max active processes":3,"max children reached":0,"slow requests":0, "processes":[{"pid":2105768,"state":"Running","start time":1744702462,"start since":0,"requests":1,"request duration":645,"request method":"GET","request uri":"/pfpm-status?full&json&domain=domain.com","content length":0,"user":"-","script":"-","last request cpu":0.00,"last request memory":0}]}
+    }
+    ,{
+    "domain":"dev.domain.com",
+    "data":{"pool":"web2","process manager":"ondemand","start time":1744697943,"start since":4519,"accepted conn":310,"listen queue":0,"max listen queue":0,"listen queue len":0,"idle processes":0,"active processes":1,"total processes":1,"max active processes":5,"max children reached":0,"slow requests":0, "processes":[{"pid":2105778,"state":"Running","start time":1744702462,"start since":0,"requests":1,"request duration":817,"request method":"GET","request uri":"/pfpm-status?full&json&domain=dev.domain.com","content length":0,"user":"-","script":"-","last request cpu":0.00,"last request memory":0}]}
+    }
+]
+    
