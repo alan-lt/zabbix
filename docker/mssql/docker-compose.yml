@@ -1,0 +1,37 @@
+
+version: "3.4"
+
+services:
+
+  zabbix-server:
+    << : *all-defaults
+    image: zabbix-server-pgsql:custom-build-0.0.6
+    user: 0:0
+    build:
+      context: .
+      dockerfile: Dockerfile.zabbix-server
+#      dockerfile_inline: |
+#        RUN ...
+    hostname: zabbix-server
+    container_name: zabbix-server
+    ports:
+      - "10051:10051"
+    depends_on:
+      - fluentd
+      - postgres
+    environment:
+      - DB_SERVER_HOST=postgres
+      - POSTGRES_DB=zabbix
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=xxxxxxxxxxxxx
+      - ZBX_PROXYCONFIGFREQUENCY=10
+      - ZBX_PROXYDATAFREQUENCY=3
+      - ZBX_ALLOWUNSUPPORTEDDBVERSIONS=0
+      - ZBX_STARTBROWSERPOLLERS=20
+      - ZBX_STARTSNMPPOLLERS=20
+      - ZBX_STARTDISCOVERERS=20
+      - ZBX_STARTPOLLERS=20
+      - ZBX_STARTPINGERS=20
+      - ZBX_STARTPROXYPOLLERS=10
+      - ZBX_CACHEUPDATEFREQUENCY=10
+      - ZBX_DEBUGLEVEL=3

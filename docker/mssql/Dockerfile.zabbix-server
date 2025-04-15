@@ -1,0 +1,15 @@
+FROM zabbix/zabbix-server-pgsql:7.2.4-centos
+USER root
+RUN microdnf -y install yum
+RUN yum install https://packages.microsoft.com/config/rhel/9/packages-microsoft-prod.rpm -y
+RUN yum remove unixODBC-utf16 unixODBC-utf16-devel -y
+RUN ACCEPT_EULA=Y yum install -y msodbcsql18 -y
+RUN ACCEPT_EULA=Y yum install -y mssql-tools18 -y
+RUN echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
+# bug https://github.com/docker/docker-py/issues/3273
+RUN echo "[servername001]" >> /etc/odbc.ini
+RUN echo "Driver = ODBC Driver 18 for SQL Server" >> /etc/odbc.ini
+RUN echo "Server = 10.0.0.57" >> /etc/odbc.ini
+RUN echo "TrustServerCertificate = yes" >> /etc/odbc.ini
+RUN echo "Port = 1433" >> /etc/odbc.ini
+RUN echo "User = zabbix" >> /etc/odbc.ini
